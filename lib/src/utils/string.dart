@@ -9,5 +9,5 @@ extension FGTString on String {
     return this;
   }
 
-  dynamic get value => num.tryParse(this) ?? bool.tryParse(this) ?? trimQuotes;
+  dynamic get value => num.tryParse(this) ?? trimQuotes;
 }
