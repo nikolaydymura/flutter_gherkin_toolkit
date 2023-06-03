@@ -16,6 +16,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:example/main.dart';
 import 'package:gherkin/gherkin.dart';
 
+class CounterEventParameter extends EventParameter<CounterEvent> {
+  CounterEventParameter()
+      : super(
+          [IncrementEvent, DecrementEvent],
+            (value, [args]) {
+            switch (value) {
+              case 'IncrementEvent':
+                return const IncrementEvent();
+              case 'DecrementEvent':
+                return const DecrementEvent();
+              default:
+                throw Exception('Event not found');
+            }
+          },
+        );
+}
+
 Future<void> main() {
   final steps = [whenAddEvent(), thenLatestStateIs(), andWait()];
   final config = TestConfiguration.standard(
