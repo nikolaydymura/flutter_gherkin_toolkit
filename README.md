@@ -29,8 +29,17 @@ TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder.
 
 ```dart
+
 const like = 'sample';
 ```
+
+| Pattern                    | Description                 |
+|----------------------------|-----------------------------|
+| tap on image with logo.png | tap on image with (\w+.png) |
+| tap on text 'Hello world'  | Content Cell                |
+| scroll down 100 points     | Content Cell                |
+| scroll up 100 points       | Content Cell                |
+| type 'user@user.com'       | Content Cell                |
 
 ## Additional information
 
