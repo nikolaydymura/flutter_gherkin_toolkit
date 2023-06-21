@@ -18,12 +18,23 @@ import 'package:gherkin/gherkin.dart';
 
 import '../worlds/widget_tester_world.dart';
 
-class TapOnTextStep extends Then1WithWorld<String, WidgetTesterWorld> {
+// with 1 arg
+
+class TapOnTextStep
+    extends Then3WithWorld<String?, String, String?, WidgetTesterWorld> {
+  final String separator;
+
+  TapOnTextStep({this.separator = '->'});
+
   @override
-  Future<void> executeStep(String input1) {
+  Future<void> executeStep(String? input1, String input2, String? input3) {
     throw UnimplementedError();
   }
 
   @override
-  Pattern get pattern => RegExp(r'tap on text `(.*)+`');
+  Pattern get pattern => RegExp(r'tap on text (?:(.*)'
+      '$separator'
+      ')?`(.*)`(?:'
+      '$separator'
+      r'(first|last|\d+))?');
 }
