@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 extension FGTString on String {
   bool get isJson =>
       startsWith('{') && endsWith('}') || startsWith('[') && endsWith(']');
@@ -10,4 +12,14 @@ extension FGTString on String {
   }
 
   dynamic get value => num.tryParse(this) ?? trimQuotes;
+
+  Type? get widgetType {
+    switch(this) {
+      case 'Text':
+        return Text;
+      case 'TextButton':
+        return TextButton;
+    }
+    return null;
+  }
 }
