@@ -16,52 +16,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:example/main.dart';
 import 'package:gherkin/gherkin.dart';
 
-class CounterEventParameter extends EventParameter<CounterEvent> {
-  CounterEventParameter()
-      : super(
-          [IncrementEvent, DecrementEvent],
-            (value, [args]) {
-            switch (value) {
-              case 'IncrementEvent':
-                return const IncrementEvent();
-              case 'DecrementEvent':
-                return const DecrementEvent();
-              default:
-                throw Exception('Event not found');
-            }
-          },
-        );
-}
+void main() async {
 
-Future<void> main() {
-  final steps = [whenAddEvent(), thenLatestStateIs(), andWait()];
+  final steps = [TapOnTextStep()];
   final config = TestConfiguration.standard(
     steps,
-    featurePath: 'test/features/increment_bloc.feature',
-    createWorld: (config) => Future.value(MultiBlocWorld(
-      [CounterBlocWorld()],
-    )),
+    featurePath: 'test/features/tap.feature',
   );
+  test('', (){});
 
-  return GherkinRunner().execute(config);
-}
-
-class CounterBlocWorld extends BlocWorld<CounterEvent, int> {
-  @override
-  BlocBase<int> build() => CounterBloc();
-
-  @override
-  FutureOr<void> invokeMethod(String name, [dynamic args]) {}
-
-  @override
-  CounterEvent mapEvent(String name, [dynamic args]) {
-    switch (name) {
-      case 'IncrementEvent':
-        return const IncrementEvent();
-      case 'DecrementEvent':
-        return const DecrementEvent();
-      default:
-        throw Exception('Event not found');
-    }
-  }
+  await WidgetRunner().execute(config);
 }

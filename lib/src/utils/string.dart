@@ -19,6 +19,8 @@ extension FGTString on String {
         return Text;
       case 'TextButton':
         return TextButton;
+      case 'FloatingActionButton':
+        return FloatingActionButton;
     }
     return null;
   }
