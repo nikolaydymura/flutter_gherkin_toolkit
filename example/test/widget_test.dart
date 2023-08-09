@@ -17,13 +17,17 @@ import 'package:example/main.dart';
 import 'package:gherkin/gherkin.dart';
 
 void main() async {
-
-  final steps = [TapOnTextStep()];
+  final steps = [
+    TapOnTextStep(),
+    LoadWidgetStep({
+      'home': () =>
+          const MaterialApp(home: MyHomePage(title: 'Flutter Demo Home Page'))
+    })
+  ];
   final config = TestConfiguration.standard(
     steps,
     featurePath: 'test/features/tap.feature',
   );
-  test('', (){});
 
   await WidgetRunner().execute(config);
 }
