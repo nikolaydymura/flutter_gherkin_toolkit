@@ -10,4 +10,7 @@ export 'src/parameters/bloc_parameter.dart';
 export 'src/parameters/event_parameter.dart';
 export 'src/widget_runner.dart';
 export 'src/test_scenario_widgets.dart';
+export 'src/steps/tap_on_text_step.dart';
+export 'src/parameters/widget_parameters.dart';
+export 'src/widget_configuration.dart';
 

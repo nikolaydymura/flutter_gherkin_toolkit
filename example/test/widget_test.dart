@@ -5,26 +5,20 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'dart:async';
 
-import 'package:example/counter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gherkin_toolkit/flutter_gherkin_toolkit.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 import 'package:example/main.dart';
-import 'package:gherkin/gherkin.dart';
 
 void main() async {
   final steps = [
-    TapOnTextStep(),
     LoadWidgetStep({
       'home': () =>
           const MaterialApp(home: MyHomePage(title: 'Flutter Demo Home Page'))
     })
   ];
-  final config = TestConfiguration.standard(
+  final config = WidgetTestConfiguration.standard(
     steps,
     featurePath: 'test/features/tap.feature',
   );
