@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:gherkin/gherkin.dart';
 
@@ -32,6 +34,17 @@ class IconDataParameter extends CustomParameter<IconData> {
           }
           return null;
         });
+}
+
+class DoubleParameter extends CustomParameter<num> {
+  DoubleParameter([Transformer<Type>? transformer])
+      : super('num', RegExp(r'(-?)\d{1,4}\.\d{1,2}$'), (c) {
+    switch (c.toLowerCase()) {
+      case 'double':
+        return double.tryParse(c);
+    }
+    return null;
+  });
 }
 
 class ElementAnchorParameter extends CustomParameter<String> {
