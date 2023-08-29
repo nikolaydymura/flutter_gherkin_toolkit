@@ -1,10 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
 
-import 'package:flutter_gherkin_toolkit/flutter_gherkin_toolkit.dart';
-import 'package:flutter_gherkin_toolkit/src/utils/string.dart';
+import '../../flutter_gherkin_toolkit.dart';
+import '../utils/string.dart';
 import 'package:gherkin/gherkin.dart';
-import 'package:test/test.dart';
 
 StepDefinitionGeneric thenLatestStateIs() {
   return then2<String, String, MultiBlocWorld>(
