@@ -1,5 +1,5 @@
-import 'package:flutter_gherkin_toolkit/flutter_gherkin_toolkit.dart';
-import 'package:flutter_gherkin_toolkit/src/utils/string.dart';
+import '../../flutter_gherkin_toolkit.dart';
+import '../utils/string.dart';
 import 'package:gherkin/gherkin.dart';
 
 StepDefinitionGeneric thenLatestStateIs() {

@@ -1,4 +1,4 @@
-import 'package:flutter_gherkin_toolkit/flutter_gherkin_toolkit.dart';
+import '../../flutter_gherkin_toolkit.dart';
 import 'package:gherkin/gherkin.dart';
 
 StepDefinitionGeneric andWait({Duration wait = Duration.zero}) {

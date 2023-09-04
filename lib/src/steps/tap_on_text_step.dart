@@ -1,7 +1,8 @@
-import 'package:flutter_test/flutter_test.dart';
+
 import 'package:gherkin/gherkin.dart';
 
 import '../../flutter_gherkin_toolkit.dart';
+import '../utils/exports.dart';
 
 class _TapOnTextStep1 extends Then1WithWorld<String, WidgetTesterWorld> {
   @override

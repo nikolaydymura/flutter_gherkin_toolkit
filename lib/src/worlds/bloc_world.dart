@@ -1,10 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gherkin/gherkin.dart';
-import 'package:meta/meta.dart';
-import 'package:get_it/get_it.dart';
 
 class MultiBlocWorld extends World {
   final List<BlocBaseWorld> _blocs;

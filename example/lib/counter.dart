@@ -1,7 +1,6 @@
 library flutter_gherkin_toolkit;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gherkin/gherkin.dart';
 
 class CounterCubit extends Cubit<int> {
   CounterCubit() : super(0);

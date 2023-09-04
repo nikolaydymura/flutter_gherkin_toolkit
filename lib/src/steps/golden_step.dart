@@ -1,9 +1,8 @@
-import 'dart:async';
 
 import 'package:gherkin/gherkin.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 import '../../flutter_gherkin_toolkit.dart';
+import '../utils/exports.dart';
 
 class GoldenStep extends Then1WithWorld<String, WidgetTesterWorld> {
   @override
