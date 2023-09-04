@@ -14,9 +14,9 @@ abstract class EventParameter<T> extends CustomParameter<T> {
               ''')\((?:.*)\))["`']?'''),
           (input) {
             final match = _params.firstMatch(input)!;
-            final args = match.group(2)?.split(separator)
-                .map((e) => e.value)
-                .toList() ?? [];
+            final args =
+                match.group(2)?.split(separator).map((e) => e.value).toList() ??
+                    [];
             return transformEvent(match.group(1)!, args);
           },
         );

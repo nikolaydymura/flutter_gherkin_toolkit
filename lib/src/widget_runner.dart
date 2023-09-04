@@ -35,21 +35,28 @@ class WidgetRunner {
         MessageLevel.info,
       );
       featureFiles.sort(
-            (FeatureFile a, FeatureFile b) => a.name.compareTo(b.name),
+        (FeatureFile a, FeatureFile b) => a.name.compareTo(b.name),
       );
     }
-    setUpAll(()  async {
+    setUpAll(() async {
       await _hook.onBeforeRun(config);
       await _reporter.test.onStarted.invoke();
     });
 
     for (final featureFile in featureFiles) {
       for (final feature in featureFile.features) {
-        groupFeature(feature, config, _tagExpressionEvaluator, _executableSteps, _reporter, _hook,);
+        groupFeature(
+          feature,
+          config,
+          _tagExpressionEvaluator,
+          _executableSteps,
+          _reporter,
+          _hook,
+        );
       }
     }
 
-    tearDownAll(()  async {
+    tearDownAll(() async {
       await _reporter.test.onFinished.invoke();
       await _hook.onAfterRun(config);
       await _reporter.dispose();
@@ -97,15 +104,15 @@ class WidgetRunner {
     } catch (e) {
       throw Exception(
         'Error when trying to find feature files with patterns'
-            '${config.features.map((e) => e.toString()).join(', ')}`'
-            'ERROR: `${e.toString()}`',
+        '${config.features.map((e) => e.toString()).join(', ')}`'
+        'ERROR: `${e.toString()}`',
       );
     }
   }
 
   void _registerStepDefinitions(
-      Iterable<StepDefinitionGeneric>? stepDefinitions,
-      ) {
+    Iterable<StepDefinitionGeneric>? stepDefinitions,
+  ) {
     if (stepDefinitions != null) {
       for (final s in stepDefinitions) {
         _executableSteps.add(

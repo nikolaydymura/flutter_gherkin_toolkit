@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gherkin/gherkin.dart';
 
-import '../utils/string.dart';
 import '../worlds/widget_tester_world.dart';
 
-class TapOnWidgetStep extends Then3WithWorld<String?, String, String?, WidgetTesterWorld> {
+class TapOnWidgetStep
+    extends Then3WithWorld<String?, String, String?, WidgetTesterWorld> {
   final String separator;
 
   TapOnWidgetStep({this.separator = '->'});
@@ -16,13 +16,14 @@ class TapOnWidgetStep extends Then3WithWorld<String?, String, String?, WidgetTes
 
   @override
   Pattern get pattern => RegExp(r'tap on widget (?:([A-Z][A-Za-z0-9$]+)'
-  '$separator'
-  r')?([A-Z][A-Za-z0-9$]+)(?:'
-  '$separator'
-  r'(first|last|\d+))?');
+      '$separator'
+      r')?([A-Z][A-Za-z0-9$]+)(?:'
+      '$separator'
+      r'(first|last|\d+))?');
 }
 
-class TapOnImageStep extends Then3WithWorld<String?, String, String?, WidgetTesterWorld> {
+class TapOnImageStep
+    extends Then3WithWorld<String?, String, String?, WidgetTesterWorld> {
   final String separator;
 
   TapOnImageStep({this.separator = '->'});
@@ -34,8 +35,8 @@ class TapOnImageStep extends Then3WithWorld<String?, String, String?, WidgetTest
 
   @override
   Pattern get pattern => RegExp(r'tap on image (?:([A-Z][A-Za-z0-9$]+)'
-  '$separator'
-  r')?`(.*\.(?:png|jpg|svg|jpeg))`(?:'
-  '$separator'
-  r'(first|last|\d+))?');
+      '$separator'
+      r')?`(.*\.(?:png|jpg|svg|jpeg))`(?:'
+      '$separator'
+      r'(first|last|\d+))?');
 }

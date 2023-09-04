@@ -7,6 +7,5 @@ class WidgetTesterWorld extends World {
   WidgetTesterWorld(this.tester);
 
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }

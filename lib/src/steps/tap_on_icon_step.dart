@@ -51,7 +51,8 @@ class _TapOnIconStep3
   Pattern get pattern => 'tap on icon {icondata}$separator{anchor}';
 }
 
-class _TapOnIconStep4 extends Then2WithWorld<Type, IconData, WidgetTesterWorld> {
+class _TapOnIconStep4
+    extends Then2WithWorld<Type, IconData, WidgetTesterWorld> {
   final String separator;
 
   _TapOnIconStep4(this.separator);
@@ -59,7 +60,9 @@ class _TapOnIconStep4 extends Then2WithWorld<Type, IconData, WidgetTesterWorld> 
   @override
   Future<void> executeStep(Type input1, IconData input2) async {
     final finder = find.ancestor(
-        of: find.byIcon(input2), matching: find.byType(input1), matchRoot: true);
+        of: find.byIcon(input2),
+        matching: find.byType(input1),
+        matchRoot: true);
     await world.tester.tap(finder);
   }
 
@@ -76,7 +79,9 @@ class _TapOnIconStep5
   @override
   Future<void> executeStep(Type input1, String input2, IconData input3) async {
     Finder finder = find.ancestor(
-        of: find.byIcon(input3), matching: find.byType(input1), matchRoot: true);
+        of: find.byIcon(input3),
+        matching: find.byType(input1),
+        matchRoot: true);
     if (input2 == 'first') {
       finder = finder.first;
     } else if (input2 == 'last') {
@@ -100,9 +105,9 @@ class _TapOnIconStep6
   Future<void> executeStep(Type input1, IconData input2, int input3) async {
     final finder = find
         .ancestor(
-        of: find.byIcon(input2),
-        matching: find.byType(input1),
-        matchRoot: true)
+            of: find.byIcon(input2),
+            matching: find.byType(input1),
+            matchRoot: true)
         .at(input3);
     await world.tester.tap(finder);
   }
@@ -118,11 +123,11 @@ class TapOnIconStepFactory {
   TapOnIconStepFactory({this.separator = '->'});
 
   Iterable<StepDefinitionGeneric> get stepDefinitions => [
-    _TapOnIconStep1(),
-    _TapOnIconStep2(separator),
-    _TapOnIconStep3(separator),
-    _TapOnIconStep4(separator),
-    _TapOnIconStep5(separator),
-    _TapOnIconStep6(separator)
-  ].reversed;
+        _TapOnIconStep1(),
+        _TapOnIconStep2(separator),
+        _TapOnIconStep3(separator),
+        _TapOnIconStep4(separator),
+        _TapOnIconStep5(separator),
+        _TapOnIconStep6(separator)
+      ].reversed;
 }

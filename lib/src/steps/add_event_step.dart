@@ -19,10 +19,8 @@ StepDefinitionGeneric whenAddEvent({String paramsSeparator = ','}) {
         final body = jsonDecode(payload);
         context.world.addEventPayload(blocName, eventName, body);
       } else if (payload.isNotEmpty) {
-        final args = payload
-            .split(paramsSeparator)
-            .map((e) => e.value)
-            .toList();
+        final args =
+            payload.split(paramsSeparator).map((e) => e.value).toList();
         context.world.addEvent(blocName, eventName, args);
       } else {
         context.world.addEvent(blocName, eventName);

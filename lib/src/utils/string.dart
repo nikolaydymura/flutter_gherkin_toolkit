@@ -14,7 +14,7 @@ extension FGTString on String {
   dynamic get value => num.tryParse(this) ?? trimQuotes;
 
   Type? get widgetType {
-    switch(this) {
+    switch (this) {
       case 'Text':
         return Text;
       case 'TextButton':
