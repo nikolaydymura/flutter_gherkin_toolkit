@@ -18,7 +18,8 @@ void groupFeature(
     Iterable<ExecutableStep> steps,
     FullReporter reporter,
     Hook hook,
-    {dynamic skip, VoidCallback? body}) {
+    {dynamic skip,
+    VoidCallback? body}) {
   return group(feature.name, () {
     setUp(() async {
       await reporter.feature.onStarted.invoke(
