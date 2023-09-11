@@ -21,3 +21,7 @@ Feature: Tab on different buttons
     Given the widget builder by 'home'
     Then scroll -700.0
     Then tap on text "Hello"
+
+  Scenario: Test scrolling
+    Given the widget builder by 'second'
+    Then scroll -700.0
