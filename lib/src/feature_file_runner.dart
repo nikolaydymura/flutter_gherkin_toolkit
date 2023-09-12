@@ -1,26 +1,7 @@
 import 'dart:async';
 
-import 'package:collection/collection.dart';
+import 'utils/exports.dart';
 import 'package:gherkin/gherkin.dart';
-import 'package:gherkin/src/configuration.dart';
-import 'package:gherkin/src/gherkin/attachments/attachment_manager.dart';
-import 'package:gherkin/src/gherkin/exceptions/gherkin_exception.dart';
-import 'package:gherkin/src/gherkin/exceptions/step_not_defined_error.dart';
-import 'package:gherkin/src/gherkin/expressions/tag_expression.dart';
-import 'package:gherkin/src/gherkin/runnables/background.dart';
-import 'package:gherkin/src/gherkin/runnables/debug_information.dart';
-import 'package:gherkin/src/gherkin/runnables/feature.dart';
-import 'package:gherkin/src/gherkin/runnables/feature_file.dart';
-import 'package:gherkin/src/gherkin/runnables/scenario.dart';
-import 'package:gherkin/src/gherkin/runnables/scenario_type_enum.dart';
-import 'package:gherkin/src/gherkin/runnables/step.dart';
-import 'package:gherkin/src/gherkin/steps/executable_step.dart';
-import 'package:gherkin/src/gherkin/steps/step_run_result.dart';
-import 'package:gherkin/src/gherkin/steps/world.dart';
-import 'package:gherkin/src/hooks/hook.dart';
-import 'package:gherkin/src/reporters/message_level.dart';
-import 'package:gherkin/src/reporters/messages/messages.dart';
-import 'package:gherkin/src/reporters/reporter.dart';
 
 class FeatureFileRunner {
   final TestConfiguration _config;
@@ -64,19 +45,19 @@ class FeatureFileRunner {
           tags: feature.tags.isEmpty
               ? []
               : feature.tags
-              .map(
-                (t) => t.tags
-                .map(
-                  (c) => Tag(
-                c,
-                t.debug.lineNumber,
-                isInherited: t.isInherited,
-              ),
-            )
-                .toList(),
-          )
-              .reduce((a, b) => a..addAll(b))
-              .toList(),
+                  .map(
+                    (t) => t.tags
+                        .map(
+                          (c) => Tag(
+                            c,
+                            t.debug.lineNumber,
+                            isInherited: t.isInherited,
+                          ),
+                        )
+                        .toList(),
+                  )
+                  .reduce((a, b) => a..addAll(b))
+                  .toList(),
         ),
       );
       await _log(
@@ -88,7 +69,7 @@ class FeatureFileRunner {
       for (final scenario in feature.scenarios) {
         if (_canRunScenario(_config.tagExpression, scenario)) {
           haveAllScenariosPassed &=
-          await _runScenarioInZone(scenario, feature.background);
+              await _runScenarioInZone(scenario, feature.background);
           if (_config.stopAfterTestFailed && !haveAllScenariosPassed) {
             break;
           }
@@ -136,9 +117,9 @@ class FeatureFileRunner {
   }
 
   bool _canRunScenario(
-      String? tagExpression,
-      ScenarioRunnable scenario,
-      ) {
+    String? tagExpression,
+    ScenarioRunnable scenario,
+  ) {
     if (tagExpression == null) {
       return true;
     } else {
@@ -146,28 +127,28 @@ class FeatureFileRunner {
         tagExpression,
         scenario.tags.isNotEmpty
             ? scenario.tags
-            .map((t) => t.tags.toList())
-            .reduce((a, b) => a..addAll(b))
-            .toList()
+                .map((t) => t.tags.toList())
+                .reduce((a, b) => a..addAll(b))
+                .toList()
             : const Iterable<String>.empty().toList(),
       );
     }
   }
 
   Future<bool> _runScenarioInZone(
-      ScenarioRunnable scenario,
-      BackgroundRunnable? background,
-      ) {
+    ScenarioRunnable scenario,
+    BackgroundRunnable? background,
+  ) {
     final completer = Completer<bool>();
     // ensure unhandled errors do not cause the entire test run to crash
     runZonedGuarded(
-          () async {
+      () async {
         final result = await _runScenario(scenario, background);
         if (!completer.isCompleted) {
           completer.complete(result);
         }
       },
-          (error, stack) {
+      (error, stack) {
         if (!completer.isCompleted) {
           // this is a special type of exception that indicates something is wrong
           // with the test rather than the test execution so fail the whole run as
@@ -189,27 +170,27 @@ class FeatureFileRunner {
   }
 
   Future<bool> _runScenario(
-      ScenarioRunnable scenario,
-      BackgroundRunnable? background,
-      ) async {
+    ScenarioRunnable scenario,
+    BackgroundRunnable? background,
+  ) async {
     final attachmentManager = await _config.getAttachmentManager(_config);
     late final World world;
     var scenarioPassed = true;
     final tags = scenario.tags.isNotEmpty
         ? scenario.tags
-        .map(
-          (t) => t.tags
-          .map(
-            (tag) => Tag(
-          tag,
-          t.debug.lineNumber,
-          isInherited: t.isInherited,
-        ),
-      )
-          .toList(),
-    )
-        .reduce((a, b) => a..addAll(b))
-        .toList()
+            .map(
+              (t) => t.tags
+                  .map(
+                    (tag) => Tag(
+                      tag,
+                      t.debug.lineNumber,
+                      isInherited: t.isInherited,
+                    ),
+                  )
+                  .toList(),
+            )
+            .reduce((a, b) => a..addAll(b))
+            .toList()
         : const Iterable<Tag>.empty();
 
     try {
@@ -244,19 +225,19 @@ class FeatureFileRunner {
           tags: scenario.tags.isEmpty
               ? []
               : scenario.tags
-              .map(
-                (t) => t.tags
-                .map(
-                  (tag) => Tag(
-                tag,
-                t.debug.lineNumber,
-                isInherited: t.isInherited,
-              ),
-            )
-                .toList(),
-          )
-              .reduce((a, b) => a..addAll(b))
-              .toList(growable: false),
+                  .map(
+                    (t) => t.tags
+                        .map(
+                          (tag) => Tag(
+                            tag,
+                            t.debug.lineNumber,
+                            isInherited: t.isInherited,
+                          ),
+                        )
+                        .toList(),
+                  )
+                  .reduce((a, b) => a..addAll(b))
+                  .toList(growable: false),
         ),
       );
 
@@ -337,11 +318,11 @@ class FeatureFileRunner {
   }
 
   Future<StepResult> _runStep(
-      StepRunnable step,
-      World world,
-      AttachmentManager attachmentManager,
-      bool skipExecution,
-      ) async {
+    StepRunnable step,
+    World world,
+    AttachmentManager attachmentManager,
+    bool skipExecution,
+  ) async {
     StepResult result;
 
     await _log(
@@ -368,7 +349,7 @@ class FeatureFileRunner {
       final parameters = _getStepParameters(step, code);
       result = await _runWithinTest<StepResult>(
         step.name,
-            () async => code.step.run(
+        () async => code.step.run(
           world,
           _reporter,
           _config.defaultTimeout,
@@ -384,7 +365,7 @@ class FeatureFileRunner {
         context: step.debug,
         result: result,
         attachments:
-        attachmentManager.getAttachmentsForContext(step.name).toList(),
+            attachmentManager.getAttachmentsForContext(step.name).toList(),
       ),
     );
 
@@ -410,7 +391,7 @@ class FeatureFileRunner {
 
   ExecutableStep _matchStepToExecutableStep(StepRunnable step) {
     final executable = _steps.firstWhereOrNull(
-          (s) => s.expression.isMatch(step.debug.lineText),
+      (s) => s.expression.isMatch(step.debug.lineText),
     );
 
     if (executable == null) {
@@ -466,10 +447,10 @@ class FeatureFileRunner {
   }
 
   Future<void> _log(
-      String message,
-      RunnableDebugInformation context,
-      MessageLevel level,
-      ) async {
+    String message,
+    RunnableDebugInformation context,
+    MessageLevel level,
+  ) async {
     await _reporter.message(
       '$message # ${context.filePath}:${context.lineNumber}',
       level,

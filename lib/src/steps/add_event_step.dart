@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_gherkin_toolkit/flutter_gherkin_toolkit.dart';
-import 'package:flutter_gherkin_toolkit/src/utils/string.dart';
+import '../../flutter_gherkin_toolkit.dart';
+import '../utils/string.dart';
 import 'package:gherkin/gherkin.dart';
 
 StepDefinitionGeneric whenAddEvent({String paramsSeparator = ','}) {
@@ -19,10 +19,8 @@ StepDefinitionGeneric whenAddEvent({String paramsSeparator = ','}) {
         final body = jsonDecode(payload);
         context.world.addEventPayload(blocName, eventName, body);
       } else if (payload.isNotEmpty) {
-        final args = payload
-            .split(paramsSeparator)
-            .map((e) => e.value)
-            .toList();
+        final args =
+            payload.split(paramsSeparator).map((e) => e.value).toList();
         context.world.addEvent(blocName, eventName, args);
       } else {
         context.world.addEvent(blocName, eventName);

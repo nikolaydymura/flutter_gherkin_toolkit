@@ -1,5 +1,6 @@
 import 'package:gherkin/gherkin.dart';
-import 'package:flutter_test/flutter_test.dart';
+
+import '../utils/exports.dart';
 
 class WidgetTesterWorld extends World {
   final WidgetTester tester;
@@ -7,6 +8,5 @@ class WidgetTesterWorld extends World {
   WidgetTesterWorld(this.tester);
 
   @override
-  void dispose() {
-  }
+  void dispose() {}
 }
