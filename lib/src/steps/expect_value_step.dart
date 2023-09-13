@@ -4,7 +4,6 @@ import 'package:gherkin/gherkin.dart';
 import '../../flutter_gherkin_toolkit.dart';
 
 class _ExpectValue extends Then1WithWorld<String, WidgetTesterWorld> {
-
   _ExpectValue();
 
   @override
@@ -17,10 +16,9 @@ class _ExpectValue extends Then1WithWorld<String, WidgetTesterWorld> {
 }
 
 class ExpectValueFactory {
-
   ExpectValueFactory();
 
   Iterable<StepDefinitionGeneric> get stepDefinitions => [
-    _ExpectValue(),
-  ].reversed;
+        _ExpectValue(),
+      ].reversed;
 }
