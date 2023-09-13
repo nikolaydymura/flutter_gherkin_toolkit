@@ -15,3 +15,10 @@ Feature: Tab on different buttons
     Given the widget builder by 'home'
     Then tap on icon Icons.add
     Given golden file at "golden_1.png"
+
+  Scenario: Tap on button by text with pump and expect value
+    Given the widget builder by 'home'
+    Then tap on text "Increment"
+    Then pump 200 milliseconds
+    Then expect "1"
+ //   Then expect "2"

@@ -15,6 +15,8 @@ class WidgetTypeParameter extends CustomParameter<Type> {
               return IconButton;
             case 'icon':
               return Icon;
+            case 'expect':
+              return Text;
             default:
               return transformer?.call(c);
           }
