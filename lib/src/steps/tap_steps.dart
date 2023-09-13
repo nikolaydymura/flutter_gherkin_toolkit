@@ -1,4 +1,3 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:gherkin/gherkin.dart';
 
 import '../worlds/widget_tester_world.dart';

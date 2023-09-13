@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:gherkin/gherkin.dart';
 
 import '../../flutter_gherkin_toolkit.dart';
+import '../utils/exports.dart';
 
 class _TapOnIconStep1 extends Then1WithWorld<IconData, WidgetTesterWorld> {
   @override

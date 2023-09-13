@@ -1,9 +1,7 @@
 import 'package:gherkin/gherkin.dart';
-import 'package:gherkin/src/gherkin/parser.dart';
-import 'package:gherkin/src/gherkin/runnables/feature_file.dart';
-import 'package:test/test.dart';
 
 import '../flutter_gherkin_toolkit.dart';
+import 'utils/exports.dart';
 
 class WidgetRunner {
   final _reporter = AggregatedReporter();

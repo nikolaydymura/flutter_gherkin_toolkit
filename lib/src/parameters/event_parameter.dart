@@ -1,4 +1,4 @@
-import 'package:flutter_gherkin_toolkit/src/utils/string.dart';
+import '../utils/string.dart';
 import 'package:gherkin/gherkin.dart';
 
 abstract class EventParameter<T> extends CustomParameter<T> {
