@@ -14,3 +14,4 @@ export 'src/test_scenario_widgets.dart';
 export 'src/steps/tap_on_text_step.dart';
 export 'src/parameters/widget_parameters.dart';
 export 'src/widget_configuration.dart';
+export 'src/remote_file_comparator.dart';
