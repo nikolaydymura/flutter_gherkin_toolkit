@@ -25,3 +25,4 @@ Feature: Tab on different buttons
   Scenario: Test scrolling
     Given the widget builder by 'second'
     Then scroll -700.0
+    Then scroll 700.0

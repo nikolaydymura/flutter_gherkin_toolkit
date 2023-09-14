@@ -10,5 +10,5 @@ class ScrollStep extends Then1WithWorld<double, WidgetTesterWorld> {
   }
 
   @override
-  Pattern get pattern => 'Then scroll {num}';
+  Pattern get pattern => 'scroll {num}';
 }
