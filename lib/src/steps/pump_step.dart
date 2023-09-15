@@ -1,9 +1,27 @@
 import 'package:flutter_gherkin_toolkit/flutter_gherkin_toolkit.dart';
 import 'package:gherkin/gherkin.dart';
 
-StepDefinitionGeneric andPump({Duration wait = Duration.zero}) {
+StepDefinitionGeneric andPump() {
+  return and<WidgetTesterWorld>(
+    RegExp(r'pump\s*'),
+    (context) async {
+      await context.world.tester.pump();
+    },
+  );
+}
+
+StepDefinitionGeneric andPumpAndSettle() {
+  return and<WidgetTesterWorld>(
+    RegExp(r'pumpAndSettle\s*'),
+        (context) async {
+      await context.world.tester.pumpAndSettle();
+    },
+  );
+}
+
+StepDefinitionGeneric andPumpWithDuration({Duration wait = Duration.zero}) {
   return and2<String, String, WidgetTesterWorld>(
-    RegExp(r'pump\s*(?:(\d+) (milliseconds))?'),
+    RegExp(r'pump\s*(?:(\d+) (millisecond(s)?))?'),
     (durationValue, timeUnit, context) async {
       final duration = int.tryParse(durationValue.trim());
       if (duration != null) {
@@ -17,9 +35,9 @@ StepDefinitionGeneric andPump({Duration wait = Duration.zero}) {
   );
 }
 
-StepDefinitionGeneric andPumpAndSettle({Duration wait = Duration.zero}) {
+StepDefinitionGeneric andPumpAndSettleWithDuration({Duration wait = Duration.zero}) {
   return and2<String, String, WidgetTesterWorld>(
-    RegExp(r'pump\s*(?:(\d+) (milliseconds))?'),
+    RegExp(r'pumpAndSettle\s*(?:(\d+) (millisecond(s)?))?'),
     (durationValue, timeUnit, context) async {
       final duration = int.tryParse(durationValue.trim());
       if (duration != null) {
