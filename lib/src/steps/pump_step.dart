@@ -21,7 +21,7 @@ StepDefinitionGeneric andPumpAndSettle() {
 
 StepDefinitionGeneric andPumpWithDuration({Duration wait = Duration.zero}) {
   return and2<String, String, WidgetTesterWorld>(
-    RegExp(r'pump\s*(?:(\d+) (millisecond(s)?))?'),
+    RegExp(r'pump\s*\d+ millisecond(s)?'),
     (durationValue, timeUnit, context) async {
       final duration = int.tryParse(durationValue.trim());
       if (duration != null) {
@@ -37,7 +37,7 @@ StepDefinitionGeneric andPumpWithDuration({Duration wait = Duration.zero}) {
 
 StepDefinitionGeneric andPumpAndSettleWithDuration({Duration wait = Duration.zero}) {
   return and2<String, String, WidgetTesterWorld>(
-    RegExp(r'pumpAndSettle\s*(?:(\d+) (millisecond(s)?))?'),
+    RegExp(r'pumpAndSettle\s*\d+ millisecond(s)?'),
     (durationValue, timeUnit, context) async {
       final duration = int.tryParse(durationValue.trim());
       if (duration != null) {
