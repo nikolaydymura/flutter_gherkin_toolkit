@@ -122,7 +122,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text('Increment'),
                 ],
               ),
-            )
+            ),
+             Container(
+               color: Colors.red,
+               child: TextField(
+                onChanged: (value) {},
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(16.0)),
+                  ),
+                ),
+            ),
+             ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
