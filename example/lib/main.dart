@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:get_it/get_it.dart';
+
+import 'custom_cached_network_image.dart';
+
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  GetIt.instance.registerSingleton<BaseCacheManager>(
+    DefaultCacheManager(),
+  );
   runApp(const MyApp());
 }
 
@@ -112,6 +121,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            CustomCachedNetworkImage(imageUri: 'https://images.unsplash.com/photo-1682687221006-b7fd60cf9dd0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80',
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
             OutlinedButton(
               onPressed: _incrementCounter,

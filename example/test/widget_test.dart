@@ -9,7 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gherkin_toolkit/flutter_gherkin_toolkit.dart';
 
 import 'package:example/main.dart';
+import 'package:mockito/annotations.dart';
+import 'package:http/http.dart' as http;
 
+@GenerateMocks([http.Client])
 void main() async {
   final steps = [
     LoadWidgetStep({
