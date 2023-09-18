@@ -1,5 +1,6 @@
-import 'package:flutter_gherkin_toolkit/flutter_gherkin_toolkit.dart';
 import 'package:gherkin/gherkin.dart';
+
+import '../worlds/widget_tester_world.dart';
 
 StepDefinitionGeneric andPump() {
   return and<WidgetTesterWorld>(
@@ -13,7 +14,7 @@ StepDefinitionGeneric andPump() {
 StepDefinitionGeneric andPumpAndSettle() {
   return and<WidgetTesterWorld>(
     RegExp(r'pumpAndSettle\s*'),
-        (context) async {
+    (context) async {
       await context.world.tester.pumpAndSettle();
     },
   );
@@ -35,7 +36,8 @@ StepDefinitionGeneric andPumpWithDuration({Duration wait = Duration.zero}) {
   );
 }
 
-StepDefinitionGeneric andPumpAndSettleWithDuration({Duration wait = Duration.zero}) {
+StepDefinitionGeneric andPumpAndSettleWithDuration(
+    {Duration wait = Duration.zero}) {
   return and2<String, String, WidgetTesterWorld>(
     RegExp(r'pumpAndSettle\s*(\d+)\s+(second|seconds|milliseconds)'),
     (durationValue, timeUnit, context) async {
