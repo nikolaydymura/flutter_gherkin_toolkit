@@ -15,3 +15,8 @@ Feature: Tab on different buttons
     Given the widget builder by 'home'
     Then tap on icon Icons.add
     Given golden file at "golden_1.png"
+
+  Scenario: Tap on button by text with pump
+    Given the widget builder by 'home'
+    Then tap on text "Increment"
+    Then pumpAndSettle 100 milliseconds
