@@ -6,6 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_gherkin_toolkit/flutter_gherkin_toolkit.dart';
 
 import 'package:example/main.dart';
@@ -13,8 +14,11 @@ import 'package:example/main.dart';
 void main() async {
   final steps = [
     LoadWidgetStep({
-      'home': () =>
-          const MaterialApp(home: MyHomePage(title: 'Flutter Demo Home Page'))
+      'home': () => MaterialApp(
+              home: MyHomePage(
+            title: 'Flutter Demo Home Page',
+            client: http.Client(),
+          ))
     })
   ];
   final config = WidgetTestConfiguration.standard(
@@ -24,3 +28,4 @@ void main() async {
 
   await WidgetRunner().execute(config);
 }
+
