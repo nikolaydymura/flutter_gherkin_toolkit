@@ -20,3 +20,17 @@ Feature: Tab on different buttons
     Given the widget builder by 'home'
     Then tap on text "Increment"
     Then pumpAndSettle 100 milliseconds
+
+  Scenario: Enter text "Hello"
+    Given the widget builder by 'home'
+    Then tap on type TextField
+    Then tap on type TextField->0
+    Then tap on type TextField->first
+    Then tap on type TextField->last
+    Then tap on type Container->TextField
+    Then tap on type Container->TextField->0
+    Then tap on type Container->TextField->first
+    Then tap on type Container->TextField->last
+    Then enter text "Hello" at 0
+    Then enter text "Hello" in Container
+    Given golden file at "golden_2.png"
