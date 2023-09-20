@@ -14,7 +14,7 @@ class RemoteFileComparator extends GoldenFileComparator
   /// directory in which [testFile] resides.
   ///
   /// The [testFile] URL must represent a file.
-  RemoteFileComparator(Uri testFile, this._host, this._port, this._root,
+  RemoteFileComparator(Uri testFile, this._host, this._root,
       {path.Style? pathStyle, this.threshold})
       : basedir = _getBasedir(testFile, pathStyle),
         _path = _getPath(pathStyle);
@@ -41,8 +41,7 @@ class RemoteFileComparator extends GoldenFileComparator
   /// platform to test behaviors with arbitrary path styles.
   final path.Context _path;
 
-  final String _host;
-  final int _port;
+  final Uri _host;
   final double? threshold;
   final String _root;
 
@@ -74,7 +73,7 @@ class RemoteFileComparator extends GoldenFileComparator
 
   @override
   Future<void> update(Uri golden, Uint8List imageBytes) async {
-    await http.post(Uri(scheme: 'http', host: _host, port: _port, path: 'sync'),
+    await http.post(_host.replace(path: 'sync'),
         headers: {'Golden-Destination': _getGoldenPath(golden)},
         body: imageBytes);
   }
@@ -85,7 +84,7 @@ class RemoteFileComparator extends GoldenFileComparator
   @protected
   Future<List<int>> getGoldenBytes(Uri golden) async {
     final response = await http.get(
-        Uri(scheme: 'http', host: _host, port: _port, path: 'sync'),
+        _host.replace(path: 'sync'),
         headers: {'Golden-Destination': _getGoldenPath(golden)});
     if (response.statusCode != 200) {
       fail('Could not be compared against non-existent file: "$golden"');
@@ -121,7 +120,7 @@ class RemoteFileComparator extends GoldenFileComparator
             final ByteData? pngBytes =
                 await entry.value.toByteData(format: ImageByteFormat.png);
             await http.post(
-                Uri(scheme: 'http', host: _host, port: _port, path: 'sync'),
+                _host.replace(path: 'sync'),
                 headers: {'Golden-Destination': output},
                 body: pngBytes!.buffer.asUint8List());
           }
@@ -141,14 +140,13 @@ class RemoteFileComparator extends GoldenFileComparator
 }
 
 void registerRemoteFileComparator(
-    {required String host, int port = 35353, double? threshold}) {
+    {required Uri host, double? threshold}) {
   if (goldenFileComparator is LocalFileComparator) {
     final testUrl = (goldenFileComparator as LocalFileComparator).basedir;
 
     goldenFileComparator = RemoteFileComparator(
       Uri.parse('$testUrl/test.dart'),
       host,
-      port,
       'goldens',
       threshold: threshold,
     );
