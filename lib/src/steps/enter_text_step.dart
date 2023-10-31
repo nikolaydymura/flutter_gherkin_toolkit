@@ -26,7 +26,8 @@ class _EnterTextStep2 extends Then2WithWorld<String, int, WidgetTesterWorld> {
   Pattern get pattern => 'enter text {string} at {int}';
 }
 
-class _EnterTextStep3 extends Then2WithWorld<String, String, WidgetTesterWorld> {
+class _EnterTextStep3
+    extends Then2WithWorld<String, String, WidgetTesterWorld> {
   @override
   Future<void> executeStep(String input1, String input2) async {
     Finder finder = find.byType(TextField);

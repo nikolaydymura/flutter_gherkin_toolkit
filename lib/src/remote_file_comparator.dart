@@ -83,8 +83,7 @@ class RemoteFileComparator extends GoldenFileComparator
   /// If the file cannot be found, an error will be thrown.
   @protected
   Future<List<int>> getGoldenBytes(Uri golden) async {
-    final response = await http.get(
-        _host.replace(path: 'sync'),
+    final response = await http.get(_host.replace(path: 'sync'),
         headers: {'Golden-Destination': _getGoldenPath(golden)});
     if (response.statusCode != 200) {
       fail('Could not be compared against non-existent file: "$golden"');
@@ -119,8 +118,7 @@ class RemoteFileComparator extends GoldenFileComparator
             );
             final ByteData? pngBytes =
                 await entry.value.toByteData(format: ImageByteFormat.png);
-            await http.post(
-                _host.replace(path: 'sync'),
+            await http.post(_host.replace(path: 'sync'),
                 headers: {'Golden-Destination': output},
                 body: pngBytes!.buffer.asUint8List());
           }
@@ -139,8 +137,7 @@ class RemoteFileComparator extends GoldenFileComparator
   }
 }
 
-void registerRemoteFileComparator(
-    {required Uri host, double? threshold}) {
+void registerRemoteFileComparator({required Uri host, double? threshold}) {
   if (goldenFileComparator is LocalFileComparator) {
     final testUrl = (goldenFileComparator as LocalFileComparator).basedir;
 

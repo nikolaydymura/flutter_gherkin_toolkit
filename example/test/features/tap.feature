@@ -1,6 +1,6 @@
 Feature: Tab on different buttons
 
-  Scenario: Tab on button by text only
+  Scenario: Tap on button by text only
     Given the widget builder by 'home'
     Then tap on text "Increment"
     Then tap on text "Increment"->first
@@ -11,9 +11,10 @@ Feature: Tab on different buttons
     Then tap on text OutlinedButton->"Increment"->first
 
 
-  Scenario: Tab on button by icon only
+  Scenario: Tap on button by icon only
     Given the widget builder by 'home'
     Then tap on icon Icons.add
+
     Given golden file at "golden_1.png"
 
   Scenario: Tap on button by text with pump
@@ -34,3 +35,13 @@ Feature: Tab on different buttons
     Then enter text "Hello" at 0
     Then enter text "Hello" in Container
     Given golden file at "golden_2.png"
+
+  Scenario: Tap on button by text only with scrolling
+    Given the widget builder by 'home'
+    Then scroll -700.0
+    Then tap on text "Hello"
+
+  Scenario: Test scrolling
+    Given the widget builder by 'second'
+    Then scroll -700.0
+    Then scroll 700.0
