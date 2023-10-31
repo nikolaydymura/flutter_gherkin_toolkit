@@ -29,8 +29,7 @@ class _TapOnTypeStep2 extends Then2WithWorld<Type, int, WidgetTesterWorld> {
   Pattern get pattern => 'tap on type {widget}$separator{int}';
 }
 
-class _TapOnTypeStep3
-    extends Then2WithWorld<Type, String, WidgetTesterWorld> {
+class _TapOnTypeStep3 extends Then2WithWorld<Type, String, WidgetTesterWorld> {
   final String separator;
 
   _TapOnTypeStep3(this.separator);
@@ -58,7 +57,9 @@ class _TapOnTypeStep4 extends Then2WithWorld<Type, Type, WidgetTesterWorld> {
   @override
   Future<void> executeStep(Type input1, Type input2) async {
     final finder = find.ancestor(
-        of: find.byType(input2), matching: find.byType(input1), matchRoot: true);
+        of: find.byType(input2),
+        matching: find.byType(input1),
+        matchRoot: true);
     await world.tester.tap(finder);
   }
 
@@ -75,7 +76,9 @@ class _TapOnTypeStep5
   @override
   Future<void> executeStep(Type input1, Type input2, String input3) async {
     Finder finder = find.ancestor(
-        of: find.byType(input2), matching: find.byType(input1), matchRoot: true);
+        of: find.byType(input2),
+        matching: find.byType(input1),
+        matchRoot: true);
     if (input3 == 'first') {
       finder = finder.first;
     } else if (input3 == 'last') {
@@ -99,9 +102,9 @@ class _TapOnTypeStep6
   Future<void> executeStep(Type input1, Type input2, int input3) async {
     final finder = find
         .ancestor(
-        of: find.byType(input2),
-        matching: find.byType(input1),
-        matchRoot: true)
+            of: find.byType(input2),
+            matching: find.byType(input1),
+            matchRoot: true)
         .at(input3);
     await world.tester.tap(finder);
   }
@@ -117,11 +120,11 @@ class TapOnTypeStepFactory {
   TapOnTypeStepFactory({this.separator = '->'});
 
   Iterable<StepDefinitionGeneric> get stepDefinitions => [
-    _TapOnTypeStep1(),
-    _TapOnTypeStep2(separator),
-    _TapOnTypeStep3(separator),
-    _TapOnTypeStep4(separator),
-    _TapOnTypeStep5(separator),
-    _TapOnTypeStep6(separator)
-  ].reversed;
+        _TapOnTypeStep1(),
+        _TapOnTypeStep2(separator),
+        _TapOnTypeStep3(separator),
+        _TapOnTypeStep4(separator),
+        _TapOnTypeStep5(separator),
+        _TapOnTypeStep6(separator)
+      ].reversed;
 }

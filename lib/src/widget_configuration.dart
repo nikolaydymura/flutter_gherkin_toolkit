@@ -8,7 +8,6 @@ import 'steps/scroll_step.dart';
 import 'steps/tap_on_icon_step.dart';
 import 'steps/tap_on_type_step.dart';
 
-
 class WidgetTestConfiguration extends TestConfiguration {
   WidgetTestConfiguration.standard(Iterable<StepDefinitionGeneric<World>> steps,
       {required String featurePath})
@@ -24,6 +23,7 @@ class WidgetTestConfiguration extends TestConfiguration {
             andPumpWithDuration(),
             andPumpAndSettle(),
             andPump(),
+            ScrollStep(),
             ...steps
           ],
           featurePath: featurePath,

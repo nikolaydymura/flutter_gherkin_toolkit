@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'pages/home_page.dart';
+import 'pages/second_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+        '/second': (BuildContext context) =>
+            const SecondPage(title: 'Second page'),
+      },
+      home: const HomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -110,27 +116,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-             Container(
-               color: Colors.red,
-               child: TextField(
+            Container(
+              color: Colors.red,
+              child: TextField(
                 onChanged: (value) {},
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(16.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(16.0)),
                   ),
                 ),
+              ),
             ),
-             ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
-      initialRoute: '/',
-      routes: <String, WidgetBuilder>{
-        '/second': (BuildContext context) =>
-            const SecondPage(title: 'Second page'),
-      },
-      home: const HomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
