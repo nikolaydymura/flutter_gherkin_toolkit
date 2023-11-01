@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gherkin/gherkin.dart';
 
@@ -19,6 +20,8 @@ class WidgetTypeParameter extends CustomParameter<Type> {
               return TextField;
             case 'container':
               return Container;
+            case 'cupertinobutton':
+              return CupertinoButton;
             default:
               return transformer?.call(c);
           }
