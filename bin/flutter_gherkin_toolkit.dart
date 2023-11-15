@@ -45,6 +45,9 @@ Future<Response> _exportResources(Request request) async {
   }
   final goldenFile = File(destination);
   await goldenFile.parent.create(recursive: true);
+  if (await goldenFile.exists()) {
+    await goldenFile.delete();
+  }
   await for (final data in request.read()) {
     await goldenFile.writeAsBytes(data, flush: true, mode: FileMode.append);
   }
