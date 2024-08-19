@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart';
 
 Future<void> flutterTestConfig({
   Map<String, Set<String>> fonts = const {},
@@ -12,24 +13,29 @@ Future<void> flutterTestConfig({
   for (final entry in fonts.entries) {
     await loadFonts(entry.key, entry.value.toList());
   }
+  final result = await Process.run('which', ['flutter']);
+  final flutterBin = File(result.stdout.toString().trim());
+  final materialFonts =
+      Directory('${flutterBin.parent.path}/cache/artifacts/material_fonts')
+          .listSync()
+          .whereType<File>()
+          .where((e) => e.path.endsWith('.ttf'));
   await loadFonts(
-    'Lato',
-    {
-      'packages/flutter_amazing_test/assets/Lato-Regular.ttf',
-    }.toList(),
+    'Roboto',
+    materialFonts
+        .where((e) => basename(e.path).startsWith('Roboto-'))
+        .map((e) => e.path)
+        .toList(),
   );
-/*
-  final cupertinoIconsFontLoader = FontLoader('packages/cupertino_icons/CupertinoIcons')
-    ..addFont(File('/Users/nd/Development/flutter/bin/assets/fonts/CupertinoIcons.ttf')
-        .readAsBytes()
-        .then((bytes) => ByteData.view(Uint8List.fromList(bytes).buffer)));
-  await cupertinoIconsFontLoader.load();
-*/
 
   final materialIconsFontLoader = FontLoader('MaterialIcons')
-    ..addFont(File('/Users/nd/Development/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf')
-        .readAsBytes()
-        .then((bytes) => ByteData.view(Uint8List.fromList(bytes).buffer)));
+    ..addFont(
+      File(
+        '${flutterBin.parent.path}/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
+      )
+          .readAsBytes()
+          .then((bytes) => ByteData.view(Uint8List.fromList(bytes).buffer)),
+    );
   await materialIconsFontLoader.load();
 
   if (goldenFileComparator is LocalFileComparator) {

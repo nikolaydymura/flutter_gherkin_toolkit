@@ -16,14 +16,16 @@ class BootPage extends StatelessWidget {
               onPressed: () {
                 onBoot(context);
               },
-              child: const Text('!!!SHOW!!!',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                    fontFamily: 'Lato',
-                    fontFamilyFallback: ['Roboto', 'San Francisco'],
-                  )),
+              child: const Text(
+                '!!!SHOW!!!',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                  fontFamily: 'Roboto',
+                  fontFamilyFallback: ['Roboto', 'San Francisco'],
+                ),
+              ),
             ),
           );
         },
