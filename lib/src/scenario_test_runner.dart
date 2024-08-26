@@ -126,6 +126,19 @@ Future<void> _consumeSteps(
           golden,
         ),
       );
+    } else if (action == 'TAP') {
+      if (step.contains('TEXT')) {
+        final textOptions = step.split('TEXT ');
+        final textAction = textOptions.last;
+        var finder = find.text(textAction);
+        await tester.tap(finder);
+      }
+    } else if (action == 'TYPE') {
+      final keyOptions = step.split('in KEY ');
+      final textOptions = keyOptions.first.split('TYPE ').last.trim();
+      final keyAction = keyOptions.last;
+      var finder = find.byKey(Key(keyAction));
+      await tester.enterText(finder, textOptions);
     } else if (action == 'SCROLL') {
       final x = double.parse(
         options
