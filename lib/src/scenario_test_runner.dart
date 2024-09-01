@@ -132,6 +132,11 @@ Future<void> _consumeSteps(
         final textAction = textOptions.last;
         var finder = find.text(textAction);
         await tester.tap(finder);
+      } else if (step.contains('on KEY ')) {
+        final keyOptions = step.split('on KEY ');
+        final keyAction = keyOptions.last;
+        var finder = find.byKey(Key(keyAction));
+        await tester.tap(finder);
       }
     } else if (action == 'TYPE') {
       final keyOptions = step.split('in KEY ');
