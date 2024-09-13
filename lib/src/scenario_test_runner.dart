@@ -25,6 +25,7 @@ class ScenarioTestRunner {
     required Widget Function(String, DeviceConfiguration) bootBuilder,
     dynamic Function()? setUpOverride,
     dynamic Function()? tearDownOverride,
+    dynamic Function(SocketEntry)? onStep,
     FutureOr<void> Function(ScenarioEntry)? setUpScenario,
   }) async {
     TestWidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +58,7 @@ class ScenarioTestRunner {
               skip: scenario.skip ?? skipGroup,
               variant: variants,
               (tester) async {
-                await _consumeSteps(tester, variants, scenario);
+                await _consumeSteps(tester, variants, scenario, onStep);
               },
             );
           }
@@ -101,6 +102,7 @@ Future<void> _consumeSteps(
   WidgetTester tester,
   ValueVariant<DeviceConfiguration> variants,
   ScenarioEntry scenario,
+  dynamic Function(SocketEntry)? onStep,
 ) async {
   for (final step in scenario.steps) {
     final options = step.split(' ');
@@ -121,17 +123,14 @@ Future<void> _consumeSteps(
         '${options[1]}+${variants.currentValue}.png',
       );
       await expectLater(
-        find.byType(MaterialApp),
+        find.byWidgetPredicate((w) => true).first,
         matchesGoldenFile(
           golden,
         ),
       );
     } else if (action == 'TAP') {
       if (step.contains('TEXT')) {
-        final textOptions = step.split('TEXT ');
-        final textAction = textOptions.last;
-        var finder = find.text(textAction);
-        await tester.tap(finder);
+        await tester.tap(find.testStep(step));
       } else if (step.contains('on KEY ')) {
         final keyOptions = step.split('on KEY ');
         final keyAction = keyOptions.last;
@@ -169,6 +168,33 @@ Future<void> _consumeSteps(
       );
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pumpAndSettle(const Duration(milliseconds: 100));
+    } else if (action == 'ON') {
+      final body = options.skip(1).join(' ');
+      onStep?.call(SocketEntry.fromConfiguration(body));
     }
+  }
+}
+
+extension on CommonFinders {
+  static final textOptions = RegExp(r'''TEXT ['"`](.*)['"`]''');
+  static final positionOptions = RegExp(r'AT (first|last|\d+)');
+
+  Finder testStep(String step) {
+    final text = textOptions.firstMatch(step)?.group(1);
+    if (text == null || text.isEmpty) {
+      throw Exception('Text not found in step: $step');
+    }
+    final position = positionOptions.firstMatch(step)?.group(1);
+    if (position == 'first') {
+      return find.textContaining(text).first;
+    } else if (position == 'last') {
+      return find.textContaining(text).last;
+    } else if (position != null) {
+      final index = int.tryParse(position);
+      if (index != null) {
+        return find.textContaining(text).at(index);
+      }
+    }
+    return find.textContaining(text);
   }
 }
