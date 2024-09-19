@@ -129,13 +129,11 @@ Future<void> _consumeSteps(
         ),
       );
     } else if (action == 'TAP') {
-      if (step.contains('TEXT')) {
-        await tester.tap(find.testStep(step));
-      } else if (step.contains('on KEY ')) {
-        final keyOptions = step.split('on KEY ');
-        final keyAction = keyOptions.last;
-        var finder = find.byKey(Key(keyAction));
-        await tester.tap(finder);
+      if (step.contains(' TEXT ')) {
+        await tester.tap(find.textStep(step));
+      } else if (step.contains(' KEY ')) {
+        final dragWidget = find.keyStep(step);
+        await tester.tap(dragWidget);
       }
     } else if (action == 'TYPE') {
       final keyOptions = step.split('in KEY ');
@@ -143,6 +141,23 @@ Future<void> _consumeSteps(
       final keyAction = keyOptions.last;
       var finder = find.byKey(Key(keyAction));
       await tester.enterText(finder, textOptions);
+    } else if (action == 'DRAG') {
+      final x = double.parse(
+        options
+                .firstWhereOrNull((e) => e.startsWith('X='))
+                ?.split('=')
+                .lastOrNull ??
+            '0.0',
+      );
+      final y = double.parse(
+        options
+                .firstWhereOrNull((e) => e.startsWith('Y='))
+                ?.split('=')
+                .lastOrNull ??
+            '0.0',
+      );
+      final dragWidget = find.keyStep(step);
+      await tester.tap(dragWidget);
     } else if (action == 'SCROLL') {
       final x = double.parse(
         options
@@ -177,9 +192,10 @@ Future<void> _consumeSteps(
 
 extension on CommonFinders {
   static final textOptions = RegExp(r'''TEXT ['"`](.*)['"`]''');
+  static final keyOptions = RegExp(r'KEY\s+(\S+)\s*');
   static final positionOptions = RegExp(r'AT (first|last|\d+)');
 
-  Finder testStep(String step) {
+  Finder textStep(String step) {
     final text = textOptions.firstMatch(step)?.group(1);
     if (text == null || text.isEmpty) {
       throw Exception('Text not found in step: $step');
@@ -196,5 +212,24 @@ extension on CommonFinders {
       }
     }
     return find.textContaining(text);
+  }
+
+  Finder keyStep(String step) {
+    final key = keyOptions.firstMatch(step)?.group(1);
+    if (key == null || key.isEmpty) {
+      throw Exception('Key not found in step: $step');
+    }
+    final position = positionOptions.firstMatch(step)?.group(1);
+    if (position == 'first') {
+      return find.byKey(Key(key)).first;
+    } else if (position == 'last') {
+      return find.byKey(Key(key)).last;
+    } else if (position != null) {
+      final index = int.tryParse(position);
+      if (index != null) {
+        return find.byKey(Key(key)).at(index);
+      }
+    }
+    return find.byKey(Key(key));
   }
 }
