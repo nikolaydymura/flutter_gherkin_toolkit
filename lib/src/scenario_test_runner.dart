@@ -141,6 +141,8 @@ Future<void> _consumeSteps(
       final keyAction = keyOptions.last;
       var finder = find.byKey(Key(keyAction));
       await tester.enterText(finder, textOptions);
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
     } else if (action == 'DRAG') {
       final x = double.parse(
         options
