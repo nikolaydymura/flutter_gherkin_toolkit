@@ -8,6 +8,8 @@ Widget materialAppWrapper({
   Iterable<Locale> supportedLocales = const <Locale>[Locale('en', 'US')],
   Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
   RouterConfig<Object>? routerConfig,
+  RouterDelegate<Object>? routerDelegate,
+  RouteInformationParser<Object>? routeInformationParser,
 }) {
   return MaterialApp.router(
     routerConfig: routerConfig,
@@ -16,5 +18,7 @@ Widget materialAppWrapper({
     supportedLocales: supportedLocales,
     theme: theme?.copyWith(platform: platform),
     debugShowCheckedModeBanner: false,
+    routerDelegate: routerDelegate,
+    routeInformationParser: routeInformationParser,
   );
 }

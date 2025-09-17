@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as path;
+import 'package:yaml/yaml.dart';
 
 import '../flutter_amazing_test.dart';
 
@@ -35,7 +36,21 @@ class ScenarioTestRunner {
 
     for (final scenarioPath in scenariosFiles) {
       final scenariosContent = await File(scenarioPath.path).readAsString();
-      final feature = jsonDecode(scenariosContent);
+      late final dynamic feature;
+      if (scenarioPath.path.endsWith('.yaml') ||scenarioPath.path.endsWith('.yml') ){
+        try {
+          feature = loadYaml(scenariosContent);
+        } catch (e) {
+          throw Exception('Error parsing YAML in file ${scenarioPath.path}: $e');
+        }
+      }
+      if (scenarioPath.path.endsWith('.json'))  {
+        try {
+          feature = jsonDecode(scenariosContent);
+        } catch (e) {
+          throw Exception('Error parsing JSON in file ${scenarioPath.path}: $e');
+        }
+      }
       final Iterable<ScenarioEntry> scenarios = feature['scenarios']
           .map((e) => ScenarioEntry.fromConfiguration(e))
           .whereType<ScenarioEntry>()
@@ -136,10 +151,11 @@ Future<void> _consumeSteps(
         await tester.tap(dragWidget);
       }
     } else if (action == 'TYPE') {
-      final keyOptions = step.split('in KEY ');
-      final textOptions = keyOptions.first.split('TYPE ').last.trim();
-      final keyAction = keyOptions.last;
-      var finder = find.byKey(Key(keyAction));
+      final textOptions = RegExp(r'''TYPE ['"`](.*)['"`]''').firstMatch(step)?.group(1);
+      if (textOptions == null || textOptions.isEmpty) {
+        throw Exception('Text not found in step: $step');
+      }
+      var finder = find.keyStep(step);
       await tester.enterText(finder, textOptions);
       await tester.pump(const Duration(milliseconds: 100));
       await tester.pumpAndSettle(const Duration(milliseconds: 100));

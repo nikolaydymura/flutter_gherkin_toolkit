@@ -27,7 +27,8 @@ void screenTest(
         semanticsEnabled: semanticsEnabled,
         tags: tags,
         retry: retry, (WidgetTester widgetTester) async {
-      final size = variant.currentValue!.surfaceSize + const Offset(0, 60);
+      const headerOffset =  Offset(0, 60);
+      final size = variant.currentValue!.surfaceSize + headerOffset;
       await widgetTester.binding.setSurfaceSize(size);
       widgetTester.view.physicalSize = size;
       widgetTester.view.devicePixelRatio = 1.0;
@@ -40,7 +41,7 @@ void screenTest(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
-              height: 60,
+              height: headerOffset.dy,
               width: size.width,
               child: Column(
                 children: [

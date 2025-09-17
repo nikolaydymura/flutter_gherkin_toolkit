@@ -42,7 +42,7 @@ class ScenarioEntry {
     this.session,
   });
 
-  factory ScenarioEntry.fromConfiguration(Map<String, dynamic> scenario) {
+  factory ScenarioEntry.fromConfiguration(dynamic scenario) {
     final description = scenario['description'];
     final List<dynamic>? requests = scenario['requests'];
     final screen = scenario['screen'];
